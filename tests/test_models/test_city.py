@@ -12,13 +12,20 @@ class test_City(test_basemodel):
         super().__init__(*args, **kwargs)
         self.name = "City"
         self.value = City
+        self.city = self.value()
+        self.city.name = "Santiago de Cali"
+        self.city.state_id = "243g21435gv3-vwtg543gw"
 
     def test_state_id(self):
         """ """
-        new = self.value()
+        new = self.city
         self.assertEqual(type(new.state_id), str)
 
     def test_name(self):
         """ """
-        new = self.value()
+        new = self.city
         self.assertEqual(type(new.name), str)
+
+
+if __name__ == "__main__":
+    unittest.main()

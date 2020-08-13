@@ -6,14 +6,18 @@ from models.amenity import Amenity
 
 class test_Amenity(test_basemodel):
     """ """
-
-    def __init__(self, *args, **kwargs):
+   def __init__(self, *args, **kwargs):
         """ """
         super().__init__(*args, **kwargs)
         self.name = "Amenity"
         self.value = Amenity
+        self.amenity = self.value()
+        self.amenity.name = "Palo pa rascarse la espalda"
 
     def test_name2(self):
         """ """
-        new = self.value()
+        new = self.amenity
         self.assertEqual(type(new.name), str)
+
+if __name__ == "__main__":
+    unittest.main()
