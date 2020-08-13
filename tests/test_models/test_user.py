@@ -22,12 +22,12 @@ class test_User(test_basemodel):
         """ tearDown """
         try:
             os.remove("file.json")
-        except:
+        except Exception:
             pass
         if getenv('HBNB_TYPE_STORAGE') == "db":
             try:
                 self.db.close()
-            except:
+            except Exception:
                 pass
 
     def test_first_name(self):

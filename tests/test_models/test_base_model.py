@@ -14,19 +14,19 @@ class test_basemodel(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         """ """
         super().__init__(*args, **kwargs)
-        self.clas_s= 'BaseModel'
+        self.clas_s = 'BaseModel'
         self.value = BaseModel
         self.base = self.value
         self.name = "MYBASE"
 
-     def setUp(self):
+    def setUp(self):
         """ """
         pass
 
     def tearDown(self):
         try:
             os.remove('file.json')
-        except:
+        except Exception:
             pass
 
     def test_default(self):
@@ -64,7 +64,7 @@ class test_basemodel(unittest.TestCase):
         """ """
         i = self.base
         self.assertEqual(str(i), '[{}] ({}) {}'.format(self.clase, i.id,
-                         i.__dict__))
+                                                       i.__dict__))
 
     def test_todict(self):
         """ """

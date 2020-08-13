@@ -47,16 +47,17 @@ class TestConsole(unittest.TestCase):
         self.assertIsNotNone(HBNBCommand.default.__doc__)
 
         def test_emptyline(self):
-        """Test empty line"""
-        with patch("sys.stdout", new=StringIO()) as f:
-            self.consol.onecmd("\n")
-            self.assertEqual("", f.getvalue())
+            """Test empty line"""
+            with patch("sys.stdout", new=StringIO()) as f:
+                self.consol.onecmd("\n")
+                self.assertEqual("", f.getvalue())
 
     def test_quit(self):
         """test quit command"""
         with patch("sys.stdout", new=StringIO()) as f:
             self.consol.onecmd("quit")
             self.assertEqual("", f.getvalue())
+
 
 if __name__ == "__main__":
     unittest.main()
