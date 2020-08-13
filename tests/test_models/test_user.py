@@ -12,23 +12,40 @@ class test_User(test_basemodel):
         super().__init__(*args, **kwargs)
         self.name = "User"
         self.value = User
+        self.user = self.value()
+        self.user.first_name = "Victor"
+        self.user.last_name = "paz"
+        self.user.email = "efrnqwergo@adsfadsf.com"
+        self.user.password = "12342546efgh"
+
+    def tearDown(self):
+        """ tearDown """
+        try:
+            os.remove("file.json")
+        except:
+            pass
+        if getenv('HBNB_TYPE_STORAGE') == "db":
+            try:
+                self.db.close()
+            except:
+                pass
 
     def test_first_name(self):
         """ """
-        new = self.value()
-        self.assertEqual(type(new.first_name), str)
+        self.assertEqual(type(self.user.first_name), str)
 
     def test_last_name(self):
         """ """
-        new = self.value()
-        self.assertEqual(type(new.last_name), str)
+        self.assertEqual(type(self.user.last_name), str)
 
     def test_email(self):
         """ """
-        new = self.value()
-        self.assertEqual(type(new.email), str)
+        self.assertEqual(type(self.user.email), str)
 
     def test_password(self):
         """ """
-        new = self.value()
-        self.assertEqual(type(new.password), str)
+        self.assertEqual(type(self.user.password), str)
+
+
+if __name__ == "__main__":
+    unittest.main()

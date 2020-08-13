@@ -12,8 +12,13 @@ class test_state(test_basemodel):
         super().__init__(*args, **kwargs)
         self.name = "State"
         self.value = State
+        self.state = self.value()
+        self.state.name = "Vic Caremonda"
 
     def test_name3(self):
         """ """
-        new = self.value()
         self.assertEqual(type(new.name), str)
+
+
+if __name__ == "__main__":
+    unittest.main()
