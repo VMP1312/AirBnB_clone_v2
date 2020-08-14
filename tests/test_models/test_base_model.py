@@ -16,8 +16,8 @@ class test_basemodel(unittest.TestCase):
         super().__init__(*args, **kwargs)
         self.clas_s = 'BaseModel'
         self.value = BaseModel
-        self.base = self.value
-        self.name = "MYBASE"
+        self.base = self.value()
+        self.name = "Mr.Base"
 
     def setUp(self):
         """ """
@@ -101,7 +101,3 @@ class test_basemodel(unittest.TestCase):
         n = new.to_dict()
         new = BaseModel(**n)
         self.assertFalse(new.created_at == new.updated_at)
-
-
-if __name__ == "__main__":
-    unittest.main()

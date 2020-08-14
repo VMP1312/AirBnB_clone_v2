@@ -12,13 +12,9 @@ class test_Amenity(test_basemodel):
         self.name = "Amenity"
         self.value = Amenity
         self.amenity = self.value()
-        self.amenity.name = "Palo pa rascarse la espalda"
+        self.amenity.name = "WiFi"
 
     def test_name2(self):
         """ """
         new = self.amenity
         self.assertEqual(type(new.name), str)
-
-
-if __name__ == "__main__":
-    unittest.main()

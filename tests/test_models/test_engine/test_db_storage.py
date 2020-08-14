@@ -12,7 +12,7 @@ from models.engine.db_storage import DBStorage
 
 
 class TestDBStorage(unittest.TestCase):
-    """Unittest for database storage"""
+    """TestDBStorage"""
 
     @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") != 'db',
                      "Test only for DBstorage")

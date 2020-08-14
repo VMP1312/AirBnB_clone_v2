@@ -14,7 +14,7 @@ class test_City(test_basemodel):
         self.value = City
         self.city = self.value()
         self.city.name = "Santiago de Cali"
-        self.city.state_id = "243g21435gv3-vwtg543gw"
+        self.city.state_id = "adfgrg23-245g78f278g"
 
     def test_state_id(self):
         """ """
@@ -25,7 +25,3 @@ class test_City(test_basemodel):
         """ """
         new = self.city
         self.assertEqual(type(new.name), str)
-
-
-if __name__ == "__main__":
-    unittest.main()

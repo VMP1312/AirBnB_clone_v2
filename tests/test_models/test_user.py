@@ -2,6 +2,8 @@
 """ """
 from tests.test_models.test_base_model import test_basemodel
 from models.user import User
+import os
+from os import getenv
 
 
 class test_User(test_basemodel):
@@ -22,8 +24,6 @@ class test_User(test_basemodel):
         """ tearDown """
         try:
             os.remove("file.json")
-        except Exception:
-            pass
         if getenv('HBNB_TYPE_STORAGE') == "db":
             try:
                 self.db.close()
@@ -45,7 +45,3 @@ class test_User(test_basemodel):
     def test_password(self):
         """ """
         self.assertEqual(type(self.user.password), str)
-
-
-if __name__ == "__main__":
-    unittest.main()
