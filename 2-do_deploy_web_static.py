@@ -62,6 +62,6 @@ def do_deploy(archive_path):
         ret = False
 
     if ret:
-        print("All tasks succeeded!")
+        print("New version deployed!")
 
     return ret
