@@ -4,7 +4,7 @@ from os import path
 from fabric.api import sudo, env, put, local
 from datetime import datetime
 
-env.hosts = ['35.190.142.12', '34.229.218.28']
+env.hosts = ['35.185.63.9', '54.242.105.247']
 T = datetime.now()
 
 
@@ -16,6 +16,7 @@ def do_pack():
     execute = local("tar -cvzf " + files + " ./web_static/")
     if execute.succeeded:
         return files
+    return None
 
 
 def do_deploy(archive_path):
