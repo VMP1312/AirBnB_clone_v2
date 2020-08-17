@@ -11,7 +11,6 @@ env.hosts = ['35.185.63.9', '54.242.105.247']
 def do_deploy(archive_path):
     """Distributes an archive to your web servers."""
 
-    dirc = archive_path.replace(".tgz", "").replace("versions/", "")
     rout = "/data/web_static/releases/"
 
     if not path.exists(archive_path):
@@ -24,6 +23,7 @@ def do_deploy(archive_path):
     if tmpfolder.failed:
         ret = False
 
+    dirc = archive_path.replace(".tgz", "").replace("versions/", "")
     dest = run('mkdir -p {}' + dirc + '/'.fotmat(rout))
 
     if dest.failed:
