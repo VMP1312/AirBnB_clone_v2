@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """ALL"""
 from os import path
-from fabric.api import sudo, env, put, local
+from fabric.api import *
 from datetime import datetime
 
 env.hosts = ['35.185.63.9', '54.242.105.247']
