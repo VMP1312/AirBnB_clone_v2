@@ -5,73 +5,76 @@ from fabric.api import sudo, env, put, local
 from datetime import datetime
 
 env.hosts = ['35.190.142.12', '34.229.218.28']
+T = datetime.now()
 
 
 def do_pack():
-    """Generates a .tgz archive from the contents of the web_static folder"""
-    try:
-        time = datetime.now().strftime('%Y%m%d%H%M%S')
-        local('mkdir -p versions')
-        local('tar -cvzf "versions/web_static_{}.tgz" web_static'.format(time))
-        path = "versions/web_static_{}.tgz" web_static'.format(time)
-        return path
-    except failed:
-        return None
+    """Generates a .tgz archive from the contents of the web_static folder."""
+    files = 'versions/web_static_{}{}{}{}{}{}.tgz'\
+        .format(T.year, T.month, T.day, T.hour, T.minute, T.second)
+    local('mkdir -p versions')
+    execute = local("tar -cvzf " + files + " ./web_static/")
+    if execute.succeeded:
+        return files
 
 
 def do_deploy(archive_path):
     """Distributes an archive to your web servers."""
 
-    if not path.isfile(archive_path):
+    if not path.exists(archive_path):
         return False
 
-    files = archive_path.split("/")[-1]
-    name = files.split(".")[0]
-    tmp = "/tmp/{}".format(files)
-    data = "/data/web_static/releases/{}/".format(name)
-    curr = "/data/web_static/current"
+    ret = True
 
-    if put("0-setup_web_static.sh", "/tmp/").failed:
-        return False
+    tmpfolder = put(archive_path, '/tmp/')
 
-    if sudo("chmod u+x /tmp/0-setup_web_static.sh").failed:
-        return False
+    if tmpfolder.failed:
+        ret = False
 
-    if sudo("/tmp/0-setup_web_static.sh").failed:
-        return False
+    dirc = archive_path.replace(".tgz", "").replace("versions/", "")
+    dest = run('mkdir -p /data/web_static/releases/' + dirc + '/')
 
-    if sudo("rm /tmp/0-setup_web_static.sh").failed:
-        return False
+    if dest.failed:
+        ret = False
 
-    if put(archive_path, tmp).failed:
-        return False
+    unpack = run('tar -xzf /tmp/' + dirc + '.tgz' +
+                 ' -C /data/web_static/releases/' + dirc + '/')
 
-    if sudo("rm -rf {}".format(data)).failed:
-        return False
-    if sudo("mkdir -p {}".format(data)).failed:
-        return False
+    if unpack.failed:
+        ret = False
 
-    if sudo("tar -xzf {} -C {}".format(tmp, data)).failed:
-        return False
+    clean = run('rm /tmp/' + dirc + '.tgz')
 
-    if sudo("rm {}".format(tmp)).failed:
-        return False
+    if clean.failed:
+        ret = False
 
-    if sudo("mv {}web_static/* {}".format(data, data)).failed:
-        return False
+    move = run('mv /data/web_static/releases/' + dirc +
+               '/web_static/* /data/web_static/releases/' + dirc + '/')
 
-    if sudo("rm -rf {}web_static".format(data)).failed:
-        return False
+    if move.failed:
+        ret = False
 
-    if sudo("rm -rf {}".format(curr)).failed:
-        return False
+    cleanfolder = run('rm -rf /data/web_static/releases/' + dirc +
+                      '/web_static')
 
-    if sudo("ln -s {} {}".format(data, curr)).failed:
-        return False
+    if cleanfolder.failed:
+        ret = False
 
-    print("New version deployed!")
+    rmold = run('rm -rf /data/web_static/current')
 
-    return True
+    if rmold.failed:
+        ret = False
+
+    new = run('ln -sf /data/web_static/releases/' + dirc +
+              '/' + ' /data/web_static/current')
+
+    if new.failed:
+        ret = False
+
+    if ret:
+        print("New version deployed!")
+
+    return ret
 
 
 def deploy():
@@ -79,7 +82,7 @@ def deploy():
 
     archive_path = do_pack()
 
-    if not archive_path:
+    if archive_path is None:
         return False
 
     return do_deploy(archive_path)
