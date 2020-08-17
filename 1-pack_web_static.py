@@ -4,13 +4,14 @@
 from datetime import datetime
 from fabric.api import local
 
+T = datetime.now()
+
 
 def do_pack():
-    """Generates a .tgz archive from the contents of the web_static folder"""
-    time = datetime.now().strftime('%Y%m%d%H%M%S')
+    """Generates a .tgz archive from the contents of the web_static folder."""
+    files = 'versions/web_static_{}{}{}{}{}{}.tgz'\
+        .format(T.year, T.month, T.day, T.hour, T.minute, T.second)
     local('mkdir -p versions')
-    local('tar -cvzf "versions/web_static_{}.tgz" web_static'.format(time))
-    path = "versions/web_static_{}.tgz" web_static'.format(time)
-    if command.succeeded:
-        return fn
-    return None
+    execute = local("tar -cvzf " + files + " ./web_static/")
+    if execute.succeeded:
+        return files
