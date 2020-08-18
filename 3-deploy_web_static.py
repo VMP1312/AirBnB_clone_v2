@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """ALL"""
-from os import path
+import os
 from fabric.api import *
 from datetime import datetime
 
@@ -22,7 +22,7 @@ def do_pack():
 def do_deploy(archive_path):
     """Distributes an archive to your web servers."""
 
-    if not path.exists(archive_path):
+    if not os.path.exists(archive_path):
         return False
 
     ret = True
