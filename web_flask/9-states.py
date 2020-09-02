@@ -16,8 +16,8 @@ def state_id(id=None):
     if id:
         _id = "State." + id
         if _id in states.keys():
-            state = states[_id]
-    return render_template('9-states.html', states=states)
+            send = states[_id]
+    return render_template('9-states.html', **locals())
 
 
 @app.teardown_appcontext
