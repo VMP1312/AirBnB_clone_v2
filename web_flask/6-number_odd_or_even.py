@@ -43,13 +43,13 @@ def number_variable_integers(n):
 @app.route('/number_template/<int:n>', strict_slashes=False)
 def number_template_variable_integers(n):
     """Template with a int"""
-    return render_template('5-number.html', number_template=n)
+    return render_template('5-number.html', n=n)
 
 
 @app.route('/number_odd_or_even/<int:n>', strict_slashes=False)
 def number_odd_or_even_variable_integers(n):
     """Template to check if is odd or even"""
-    return render_template('6-number_odd_or_even.html', number_odd_or_even=n)
+    return render_template('6-number_odd_or_even.html', n=n)
 
 
 if __name__ == '__main__':
