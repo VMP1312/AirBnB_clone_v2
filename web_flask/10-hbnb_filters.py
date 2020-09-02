@@ -17,11 +17,11 @@ def close(self):
 
 
 @app.route('/hbnb_filters', strict_slashes=False)
-def filters():
-    """Display a HTML page AirBnB"""
-    st = storage.all(State).values()
-    amen = storage.all(Amenity).values()
-    return render_template('10-hbnb_filters.html', states=st, amenities=amen)
+def hbnb_filters():
+    """Returns states and id"""
+    states = storage.all(State).values()
+    amenities = storage.all(Amenity).values()
+    return render_template('10-hbnb_filters.html', **locals())
 
 
 if __name__ == '__main__':

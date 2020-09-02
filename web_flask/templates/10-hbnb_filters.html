@@ -36,8 +36,15 @@
 
 					<div class="amenities">
 						<h3>Amenities</h3>
-						<h4>&nbsp;</h4>
-						rm 
+						&nbsp;
+						<div class="popover">
+						  <ul>
+							{% for am in amenities|sort(attribute='name') %}
+							<li>{{am.name}}</li>
+							{% endfor %}
+						  </ul>
+						</div>
+					  </div>
 			</section>
 
 		</div>
